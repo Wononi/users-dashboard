@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Users Dashboard
 
-## Getting Started
+Веб-приложение для отображения списка пользователей с возможностью поиска, фильтрации и просмотра детальной информации.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Описание
+
+Приложение реализует пользовательский дашборд на основе публичного API.
+
+Основной функционал:
+
+* отображение списка пользователей
+* поиск по имени и email
+* фильтрация по роли
+* пагинация
+* детальная страница пользователя
+
+---
+
+## Технологии
+
+* Next.js (App Router)
+* TypeScript
+* React Query (TanStack Query v5)
+* Zustand
+* Tailwind CSS
+
+---
+
+## Функциональность
+
+* Список пользователей
+* Поиск с debounce
+* Фильтрация по ролям (admin, moderator, user)
+* Клиентская пагинация
+* Страница пользователя (`/users/[id]`)
+* Skeleton загрузки
+* Empty и error состояния
+* Оптимизированные изображения (Next.js Image)
+
+---
+
+## Архитектура
+
+### Разделение состояния
+
+* **Server state** (данные пользователей) — React Query
+* **Client state** (поиск, фильтры, текущая страница) — Zustand
+
+---
+
+### Работа с API
+
+React Query используется для:
+
+* кеширования данных
+* управления загрузкой
+* обработки ошибок
+
+---
+
+### Фильтрация и пагинация
+
+Фильтрация реализована на клиенте по всем загруженным пользователям.
+Для этого данные загружаются одним запросом (`limit: 100`), после чего фильтрация и пагинация выполняются на клиенте.
+
+Это решение было выбрано, чтобы избежать ситуации, при которой:
+
+* текущая страница не содержит нужных пользователей
+* но они существуют на других страницах
+
+Таким образом обеспечивается корректный и предсказуемый UX.
+
+---
+
+### Управление состоянием
+
+Zustand используется для хранения:
+
+* поискового запроса
+* выбранной роли
+* текущей страницы
+
+---
+
+### Структура проекта
+
+```bash id="readme_struct"
+src/
+├── app/
+├── components/
+├── hooks/
+├── services/
+├── store/
+├── utils/
+├── types/
+├── providers/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Запуск проекта
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash id="readme_run"
+npm install
+npm run dev
+```
 
-## Learn More
+Открыть в браузере:
 
-To learn more about Next.js, take a look at the following resources:
+```id="readme_url"
+http://localhost:3000/users
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Дополнительно
 
-## Deploy on Vercel
+* Используется React Query v5 (`placeholderData`)
+* Включён строгий режим TypeScript (без `any`)
+* API: https://dummyjson.com/users
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Возможные улучшения
+
+* Серверная фильтрация
+* Infinite scroll
+* Сортировка
+* Тесты
+* Улучшение доступности
+* Тёмная тема
+
+---
+
+## Автор
+
+Петр Бычков
