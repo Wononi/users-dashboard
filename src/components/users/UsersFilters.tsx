@@ -23,7 +23,7 @@ export const UsersFilters = () => {
                 className="border rounded-lg px-4 py-2 w-full md:w-56 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={role}
                 onChange={(e) => {
-                    setRole(e.target.value as any);
+                    setRole(e.target.value as UserRole);
                     setPage(1);
                 }}
             >
